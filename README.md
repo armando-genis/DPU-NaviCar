@@ -1,21 +1,6 @@
 # DPU-NaviCar
 This repository contains packages for the autonomous vehicle project at Kütahya Dumlupınar Üniversitesi. It includes essential modules for mapping, localization, and navigation systems, enabling autonomous operation
 
-
-## 📥 Installation
-
-Before running the project, make sure you have the required dependencies installed:
-
-
-sudo apt update
-sudo apt install ros-${ROS_DISTRO}-gazebo-dev ros-${ROS_DISTRO}-gazebo-ros-pkgs
-
-
-export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/home/genis/Desktop/dpu_ws/src/DPU-NaviCar/city_simulation
-echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/home/genis/Desktop/dpu_ws/src/DPU-NaviCar/city_simulation" >> ~/.bashrc
-source ~/.bashrc
-
-
 ## → 🛣️ Considerations for Creating HD Maps with Vector Map Builder
 
 When creating a `Lanelet2Map` in the Vector Map Builder, follow these steps to configure the map projection:
@@ -36,8 +21,17 @@ It's crucial to define a **centerline** for each lanelet. Here's how to create c
 2. **Access Actions Menu** ➝ In the top-right corner, click on **Action**.
 3. **Create Centerline** ➝ From the dropdown, select **Create Centerline**.
 
+### → 🔧 Setting Up the Gazebo Environment
 
-## ⚙️ Scaling the Robot Model
+Set the GAZEBO_MODEL_PATH environment variable to allow Gazebo to locate models during simulations. 
+```bash
+export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/home/genis/Desktop/dpu_ws/src/DPU-NaviCar/city_simulation
+echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/home/genis/Desktop/dpu_ws/src/DPU-NaviCar/city_simulation" >> ~/.bashrc
+source ~/.bashrc
+```
+Replace `/home/genis/Desktop/dpu_ws/src/DPU-NaviCar/city_simulation` with the path to your model directory.
+
+## → ⚙️ Scaling the Robot Model
 
 To scale the robot correctly, modify these files:
 
@@ -53,7 +47,7 @@ To scale the robot correctly, modify these files:
     <xacro:property name="scale_percent" value="-50"/>
     ```
 
-## 🔄 Building Required Packages
+## → 🔄 Building Required Packages
 
 Clone the necessary package:
 
@@ -111,14 +105,14 @@ colcon build
 ```
 
 
-## 🏎️ Launching the Robot Model in Gazebo
+## → 🏎️ Launching the Robot Model in Gazebo
 
 Start by launching the robot model in the Gazebo simulation environment:
 ```bash
 ros2 launch niagara_model display.launch.py
 ```
 
-## 🗺️ Visualizing the Map with `osm_visualizer`
+## → 🗺️ Visualizing the Map with `osm_visualizer`
 
 Before starting RViz2, it's essential to visualize the map using the `osm_visualizer` node. This step is crucial because certain messages, such as `/hd_map` and `/crosswalk_polygons`, are published only once. Launch the `osm_visualizer` with the following command:
 
@@ -130,7 +124,7 @@ ros2 launch map_visualizer osm_visualizer.launch.py
 
 ---
 
-## 🛠️ Configuring Waypoints Routing
+## → 🛠️ Configuring Waypoints Routing
 
 To set up the waypoints routing, update the `params.yaml` configuration file with the correct paths to your `.osm` file, as well as the desired start and end points. Once configured, launch the waypoints routing node:
 
